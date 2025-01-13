@@ -1,0 +1,28 @@
+
+{% extends "blogs/base.html" %}
+
+{% block content %}
+
+<h1>Your Blogs</h1>
+
+{% if posts %}
+    {% for post in posts %}
+        <div class="post-item">
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content }}</p>
+
+            <a href="{% url 'update-blog' pk=post.pk %}" class="btn btn-primary">Update</a>
+
+            <form action="{% url 'delete-blog' pk=post.pk %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+        <hr>
+    {% endfor %}
+{% else %}
+    <p>No blogs found for this user.</p>
+{% endif %}
+
+
+{% endblock %}
